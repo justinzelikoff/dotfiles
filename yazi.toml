@@ -11,22 +11,25 @@ vim = [
 
 [open]
 rules = [
-	# 1. Images First
+	# 1. Images
 	{ mime = "image/*", use = "gnome-image" },
 
-	# 2. General Text Files (Highest priority for Vim)
-	# By putting this here, .txt and standard text files hit Vim first.
+	# 2. General Text (Files with content)
 	{ mime = "text/*",  use = "vim" },
 
-	# 3. PDF Specific (The parser needs mime="*", but we keep it below text/*)
-	{ name = "*.pdf", mime = "*", use = "gnome-pdf" },
-
-	# 4. Specific Config Extensions (Also for Vim)
+	# 3. Programming & Config (Fixes blank files like test.py)
+	# We put these ABOVE the PDF rule so blank code files hit Vim first.
+	{ name = "*.py",   mime = "*", use = "vim" },
+	{ name = "*.sh",   mime = "*", use = "vim" },
 	{ name = "*.md",   mime = "*", use = "vim" },
 	{ name = "*.toml", mime = "*", use = "vim" },
 	{ name = "*.conf", mime = "*", use = "vim" },
 
-	# 5. Final Fallback
-	# This ensures if nothing else matches (and it's not a PDF/Image), it's Vim.
+	# 4. PDFs (Specific extension)
+	{ name = "*.pdf", mime = "*", use = "gnome-pdf" },
+
+	# 5. Final Fallback for anything else
+	# If it's a blank file with no extension, it will hit here and use Vim.
 	{ mime = "*", use = "vim" }
 ]
+
