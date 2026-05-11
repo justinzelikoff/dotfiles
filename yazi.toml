@@ -1,0 +1,26 @@
+[opener]
+gnome-image = [
+	# Try 'loupe' first; if you use the older one, change this to 'eog'
+	{ run = 'loupe "$@"', detach = true, desc = "GNOME Image Viewer" }
+]
+vim = [
+	{ run = 'vim "$@"', block = true, desc = "Vim" }
+]
+
+[open]
+rules = [
+	# 1. Images - Using Loupe
+	{ mime = "image/*", use = "gnome-image" },
+
+	# 2. Text files - Bypassing cosmic-edit for Vim
+	{ mime = "text/*",  use = "vim" },
+
+	# 3. Specific patterns with mandatory mime="*" for your Yazi version
+	{ name = "*.md",   mime = "*", use = "vim" },
+	{ name = "*.toml", mime = "*", use = "vim" },
+	{ name = "*.conf", mime = "*", use = "vim" },
+	{ name = "*.txt",  mime = "*", use = "vim" },
+
+	# 4. Fallback for everything else
+	{ mime = "*", use = "vim" }
+]
