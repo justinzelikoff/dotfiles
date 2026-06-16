@@ -1,0 +1,1 @@
+alias update='printf "\033[1;38;2;0;191;255m::\033[0m \033[1mChecking Arch & AUR Updates...\033[0m\n"; yay; printf "\n\033[1;38;2;0;191;255m::\033[0m \033[1mChecking Flathub Updates...\033[0m\n"; flatpak update; printf "\n\033[1;38;2;0;191;255m::\033[0m \033[1mChecking Hardware Firmware...\033[0m\n"; fwupdmgr refresh && fwupdmgr update --check-using-egids'
