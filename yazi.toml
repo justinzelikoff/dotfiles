@@ -6,7 +6,7 @@ gnome-pdf = [
 	{ run = 'evince "$@"', detach = true, desc = "GNOME Document Viewer" }
 ]
 vim = [
-	{ run = 'vim "$@"', block = true, desc = "Vim" }
+	{ run = 'nvim "$@"', block = true, desc = "NVim" }
 ]
 
 [open]
@@ -30,6 +30,6 @@ rules = [
 
 	# 5. Final Fallback for anything else
 	# If it's a blank file with no extension, it will hit here and use Vim.
-	{ mime = "*", use = "vim" }
+	{ mime = "*", use = "nvim" }
 ]
 
