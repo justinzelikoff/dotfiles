@@ -6,6 +6,9 @@ set termguicolors       " Enable 24-bit true colors
 set ttimeout            " Speed up escape key responsiveness
 set ttimeoutlen=50
 
+" Press F12 to save and run current Python code
+autocmd FileType python nnoremap <buffer> <F12> :w<CR>:!python3 %<CR>
+
 " ==============================================================================
 " 2. Plugin Management (vim-plug)
 " ==============================================================================
