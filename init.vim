@@ -7,8 +7,13 @@ set ttimeout            " Speed up escape key responsiveness
 set ttimeoutlen=50
 
 " Press F12 to save and run current Python code
-autocmd FileType python nnoremap <buffer> <F12> :w<CR>:!python3 %<CR>
+autocmd FileType python nnoremap <buffer> <F9> :w<CR>:!python3 %<CR>
 
+" Easy exit from Neovim terminal mode
+tnoremap <Esc> <C-\><C-n>
+
+" Allow Ctrl+w window navigation directly inside the terminal
+tnoremap <C-w> <C-\><C-n><C-w>
 " ==============================================================================
 " 2. Plugin Management (vim-plug)
 " ==============================================================================
@@ -62,4 +67,5 @@ vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
 -- Enable Python LSP (Pyright) using Neovim 0.11+ native loader
 vim.lsp.enable('pyright')
+vim.lsp.enable('rust_analyzer')
 EOF
