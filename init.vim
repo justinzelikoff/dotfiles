@@ -29,6 +29,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'neovim/nvim-lspconfig'        " Presets for Neovim's built-in LSP client
 Plug 'nvim-lualine/lualine.nvim'    " Sleek status bar
 Plug 'nvim-tree/nvim-web-devicons'  " Devicons support for the status bar
+Plug 'jiangmiao/auto-pairs'         " Auto-close brackets, quotes, parens
 
 call plug#end()
 
