@@ -14,6 +14,10 @@ tnoremap <Esc> <C-\><C-n>
 
 " Allow Ctrl+w window navigation directly inside the terminal
 tnoremap <C-w> <C-\><C-n><C-w>
+
+" Pressing 'gl' opens the diagnostic error message floating window
+nnoremap gl <cmd>lua vim.diagnostic.open_float()<CR>
+
 " ==============================================================================
 " 2. Plugin Management (vim-plug)
 " ==============================================================================
