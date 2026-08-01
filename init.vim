@@ -35,6 +35,10 @@ Plug 'nvim-lualine/lualine.nvim'    " Sleek status bar
 Plug 'nvim-tree/nvim-web-devicons'  " Devicons support for the status bar
 Plug 'jiangmiao/auto-pairs'         " Auto-close brackets, quotes, parens
 
+" suda.vim gives sudo abilities
+Plug 'lambdalisue/suda.vim'
+let g:suda_smart_edit = 1
+
 call plug#end()
 
 " ==============================================================================
