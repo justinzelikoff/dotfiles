@@ -114,7 +114,7 @@ augroup END
 " Force Neovim native Tree-sitter to start on supported files
 augroup TreesitterHighlight
   autocmd!
-  autocmd FileType rust,python,lua,vim,bash,json lua pcall(vim.treesitter.start)
+  autocmd FileType * lua pcall(vim.treesitter.start)
 augroup END
 
 " ==============================================================================
@@ -147,7 +147,7 @@ vim.cmd('call LoadSavedTheme()')
 local ok_ts, ts = pcall(require, "nvim-treesitter.configs")
 if ok_ts then
   ts.setup({
-    ensure_installed = { "rust", "python", "lua", "vim", "vimdoc", "bash", "json" },
+    ensure_installed = { "rust", "python", "lua", "vim", "vimdoc", "bash", "json", "html"},
     auto_install = true,
     highlight = {
       enable = true,
