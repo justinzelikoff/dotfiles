@@ -111,7 +111,7 @@ augroup TransparentBg
         \ endif
 augroup END
 
-" Force Neovim native Tree-sitter to start on supported files
+" Automatically trigger Tree-sitter on any filetype that has a parser installed
 augroup TreesitterHighlight
   autocmd!
   autocmd FileType * lua pcall(vim.treesitter.start)
@@ -143,12 +143,19 @@ end
 -- Restore your last used theme automatically on startup
 vim.cmd('call LoadSavedTheme()')
 
--- 3. Configure Treesitter (safely guarded)
+-- 3. Configure Treesitter (safely guarded with auto-install)
 local ok_ts, ts = pcall(require, "nvim-treesitter.configs")
 if ok_ts then
   ts.setup({
-    ensure_installed = { "rust", "python", "lua", "vim", "vimdoc", "bash", "json", "html"},
+    ensure_installed = { 
+      "rust", "python", "lua", "vim", "vimdoc", 
+      "bash", "json", "html", "css", "javascript", 
+      "typescript", "markdown", "markdown_inline", "yaml" 
+    },
+    
+    -- Auto-installs missing parsers automatically when opening new filetypes!
     auto_install = true,
+
     highlight = {
       enable = true,
       additional_vim_regex_highlighting = false,
