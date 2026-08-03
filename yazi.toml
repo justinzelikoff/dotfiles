@@ -1,4 +1,7 @@
 [opener]
+libreoffice = [
+	{ run = 'libreoffice "$@"', detach = true, desc = "LibreOffice" }
+]
 firefox = [
 	{ run = 'firefox "$@"', detach = true, desc = "Firefox" }
 ]
@@ -11,33 +14,35 @@ mpv = [
 
 [open]
 prepend_rules = [
-	# 1. PDFs
-	{ url = "*.pdf", use = "firefox" },
+	# 1. PDFs strictly to Firefox
 	{ mime = "application/pdf", use = "firefox" },
+	{ url = "*.pdf", use = "firefox" },
 
-	# 2. Audio & Video
+	# 2. Audio & Video strictly to MPV
 	{ mime = "audio/*", use = "mpv" },
 	{ mime = "video/*", use = "mpv" },
 	{ url = "*.{mp3,flac,wav,aac,ogg,mkv,mp4,webm}", use = "mpv" },
 
-	# 3. Images
+	# 3. Images to Firefox
 	{ mime = "image/*", use = "firefox" },
 	{ url = "*.{png,jpg,jpeg,webp,gif,svg}", use = "firefox" },
 
-	# 4. Spreadsheets (Must stay ABOVE text/* so CSV doesn't open in nvim)
-	{ mime = "text/csv", use = "firefox" },
-	{ mime = "application/vnd.ms-excel", use = "firefox" },
-	{ mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", use = "firefox" },
-	{ mime = "application/vnd.oasis.opendocument.spreadsheet", use = "firefox" },
-	{ url = "*.{csv,xlsx,xls,ods}", use = "firefox" },
+	# 4. Office Documents & Spreadsheets -> LibreOffice
+	{ mime = "text/csv", use = "libreoffice" },
+	{ mime = "application/vnd.ms-excel", use = "libreoffice" },
+	{ mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", use = "libreoffice" },
+	{ mime = "application/vnd.oasis.opendocument.spreadsheet", use = "libreoffice" },
+	{ mime = "application/msword", use = "libreoffice" },
+	{ mime = "application/vnd.openxmlformats-officedocument.wordprocessingml.document", use = "libreoffice" },
+	{ mime = "application/vnd.oasis.opendocument.text", use = "libreoffice" },
+	{ url = "*.{csv,xlsx,xls,ods,doc,docx,odt}", use = "libreoffice" },
 
-	# 5. ALL Text files, system configs, & source code
+	# 5. ALL Text files & Code strictly to Neovim
 	{ mime = "text/*", use = "nvim" },
 	{ mime = "application/{json,javascript,xml,toml,x-yaml,x-sh,x-shellscript}", use = "nvim" },
 	{ url = "*.{txt,py,sh,md,toml,conf,json,yaml,yml,c,cpp,h,rs,go,js,ts,css,html,ini,log}", use = "nvim" }
 ]
 
 append_rules = [
-	# Absolute fallback for unknown/empty files
 	{ mime = "*", use = "nvim" }
 ]
