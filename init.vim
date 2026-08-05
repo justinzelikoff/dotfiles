@@ -49,10 +49,17 @@ let g:suda_smart_edit = 1
 call plug#end()
 
 " ==============================================================================
-" 3. Theme Persistence
+" 3. Theme & Transparency Persistence
 " ==============================================================================
-let g:transparent_enabled = 1
 let g:theme_state_file = stdpath('data') . '/last_colorscheme.txt'
+let g:transparency_state_file = stdpath('data') . '/transparency_state.txt'
+
+" Read saved transparency state on startup (defaults to 1 if file doesn't exist)
+if filereadable(g:transparency_state_file)
+  let g:transparent_enabled = str2nr(readfile(g:transparency_state_file)[0])
+else
+  let g:transparent_enabled = 1 
+endif
 
 function! SaveCurrentTheme()
   if exists('g:colors_name')
@@ -87,10 +94,14 @@ augroup END
 " 4. Lua Setup (Theme, Treesitter, Statusline & LSP)
 " ==============================================================================
 lua << EOF
--- The brute-force toggle function
+-- The brute-force toggle function (Now with state saving!)
 function _G.ToggleTransparency()
   local is_trans = not (vim.g.transparent_enabled == 1)
   vim.g.transparent_enabled = is_trans and 1 or 0
+  
+  -- Save the new state to the persistence file
+  local state_file = vim.fn.stdpath('data') .. '/transparency_state.txt'
+  vim.fn.writefile({tostring(vim.g.transparent_enabled)}, state_file)
   
   require("onedark").setup({
     style = 'dark',
