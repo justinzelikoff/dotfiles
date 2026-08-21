@@ -1,0 +1,2 @@
+[hooks]
+wallpaper_changed = "/home/justinzelikoff/.config/noctalia/theme-hook.sh"

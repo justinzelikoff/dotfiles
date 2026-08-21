@@ -1,0 +1,24 @@
+[config]
+reload_apps = true
+
+[templates.kitty]
+input_path = '~/.config/matugen/templates/kitty.conf'
+output_path = '~/.config/kitty/dank-theme.conf'
+post_hook = 'killall -SIGUSR1 kitty'
+
+[templates.kitty_tabs]
+input_path = '~/.config/matugen/templates/kitty-tabs.conf'
+output_path = '~/.config/kitty/dank-tabs.conf'
+
+[templates.pywalfox]
+input_path = '~/.config/matugen/templates/colors.json'
+output_path = '~/.cache/wal/colors.json'
+post_hook = '/home/justinzelikoff/.local/bin/pywalfox update'
+
+[templates.niri]
+input_path = '~/.config/matugen/templates/niri-colors.kdl'
+output_path = '~/.config/niri/dms/colors.kdl'
+
+[templates.yazi]
+input_path = '~/.config/matugen/templates/yazi-theme.toml'
+output_path = '~/.config/yazi/theme.toml'
