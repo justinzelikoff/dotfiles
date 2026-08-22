@@ -295,6 +295,10 @@ spawn-at-startup "hypridle"
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 
+// Load icon theme
+spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
+spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "icon-theme" "Papirus"
+
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
     skip-at-startup
