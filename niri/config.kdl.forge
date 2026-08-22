@@ -764,6 +764,7 @@ binds {
     Mod+Shift+P { power-off-monitors; }
 }
 
-include "dms/colors.kdl"
+// Commenting out because using Noctalia for colors
+//include "dms/colors.kdl"
 
 include "noctalia.kdl"
