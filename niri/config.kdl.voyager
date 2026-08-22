@@ -473,6 +473,8 @@ binds {
     // Launch Terminal
     Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
 
+    // Launch Yazi
+    Mod+Y { spawn "kitty" "-e" "yazi"; }
 
     // Noctalia Lock Screen (or change to "hyprlock" if you disabled Noctalia lockscreen)
     Mod+Escape { spawn "noctalia" "msg" "session" "lock"; }
