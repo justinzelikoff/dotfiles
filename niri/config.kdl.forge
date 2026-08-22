@@ -411,6 +411,16 @@ window-rule {
     }
 }
 
+// no border background for cosmic-files
+window-rule {
+    match app-id="cosmic-files"
+    draw-border-with-background false
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
 // Noctalia Blur
 /* Apps: blur them all without xray so it looks more realistic. */
 window-rule {
@@ -480,6 +490,9 @@ binds {
 
     // Launch Yazi
     Mod+Y { spawn "kitty" "-e" "yazi"; }
+
+    // Launch Nautalis
+    Mod+N { spawn "nautilus"; }
 
     // Noctalia Lock Screen (or change to "hyprlock" if you disabled Noctalia lockscreen)
     Mod+Escape { spawn "noctalia" "msg" "session" "lock"; }
