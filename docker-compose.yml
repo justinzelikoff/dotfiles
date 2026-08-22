@@ -1,0 +1,173 @@
+# ==============================================================================
+# Production Media Stack Docker Compose File
+# System: Arch Linux (Jellyfin running natively on host via AUR)
+# Host Media Paths: /mnt/movies, /mnt/tvshows
+# Base Config Path: /opt/docker-apps
+# ==============================================================================
+
+name: arr-stack
+
+networks:
+  media-network:
+    driver: bridge
+
+services:
+  # ----------------------------------------------------------------------------
+  # Gluetun: Isolated VPN Container for ExpressVPN
+  # Handles VPN tunnel exclusively for qBittorrent with automatic kill-switch
+  # ----------------------------------------------------------------------------
+  gluetun:
+    image: qmcgaw/gluetun:latest
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - VPN_SERVICE_PROVIDER=expressvpn
+      - VPN_TYPE=openvpn
+      # Replace these with your regenerated manual OpenVPN credentials from ExpressVPN Dashboard
+      - OPENVPN_USER="3wg43h8yeo6hgfuh3bpne624"
+      - OPENVPN_PASSWORD="516hg5ujp3x6lbtkbryalp52"
+      - SERVER_COUNTRIES=USA
+      - TZ=America/New_York
+    ports:
+      - 8080:8080     # qBittorrent Web UI (exposed via Gluetun network)
+      - 6881:6881     # Torrenting Port (TCP)
+      - 6881:6881/udp # Torrenting Port (UDP)
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:9999/v1/openvpn/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - media-network
+
+  # ----------------------------------------------------------------------------
+  # qBittorrent: P2P Download Client
+  # Trapped entirely inside the Gluetun VPN container network
+  # ----------------------------------------------------------------------------
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    network_mode: "service:gluetun" # Routes ALL traffic through Gluetun VPN
+    depends_on:
+      gluetun:
+        condition: service_healthy # Waits for Gluetun VPN to connect completely
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      - WEBUI_PORT=8080
+    volumes:
+      - /opt/docker-apps/qbittorrent:/config
+      - /mnt/hdd/movies:/mnt/movies
+      - /mnt/hdd/tvshows:/mnt/tvshows
+      - /mnt/hdd/downloads:/mnt/downloads
+    restart: unless-stopped
+
+  # ----------------------------------------------------------------------------
+  # Prowlarr: Indexer Manager
+  # Integrates indexers with Radarr and Sonarr
+  # ----------------------------------------------------------------------------
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - /opt/docker-apps/prowlarr:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+    networks:
+      - media-network
+
+  # ----------------------------------------------------------------------------
+  # Radarr: Movie Collection Manager
+  # ----------------------------------------------------------------------------
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    depends_on:
+      qbittorrent:
+        condition: service_started # Waits for qBittorrent to start
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - /opt/docker-apps/radarr:/config
+      - /mnt/hdd/movies:/mnt/movies
+      - /mnt/hdd/downloads:/mnt/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+    networks:
+      - media-network
+
+  # ----------------------------------------------------------------------------
+  # Sonarr: TV Show Collection Manager
+  # ----------------------------------------------------------------------------
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    depends_on:
+      qbittorrent:
+        condition: service_started # Waits for qBittorrent to start
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+    volumes:
+      - /opt/docker-apps/sonarr:/config
+      - /mnt/hdd/tvshows:/mnt/tvshows
+      - /mnt/hdd/downloads:/mnt/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    networks:
+      - media-network
+
+  # ----------------------------------------------------------------------------
+  # Seerr: Media Request and Discovery
+  # ----------------------------------------------------------------------------
+  seerr:
+    image: ghcr.io/seerr-team/seerr:latest
+    container_name: seerr
+    init: true
+    depends_on:
+      radarr:
+        condition: service_started # Waits for Radarr backend
+      sonarr:
+        condition: service_started # Waits for Sonarr backend
+    environment:
+      - LOG_LEVEL=info
+      - TZ=America/New_York
+      - PORT=5055
+    volumes:
+      - /opt/docker-apps/seerr:/app/config
+    ports:
+      - 5055:5055
+    restart: unless-stopped
+    networks:
+      - media-network
+
+  # ----------------------------------------------------------------------------
+  # Byparr: Cloudflare Anti-Bot Bypass Proxy
+  # Drop-in replacement for FlareSolverr
+  # ----------------------------------------------------------------------------
+  byparr:
+    image: ghcr.io/thephaseless/byparr:latest
+    container_name: byparr
+    environment:
+      - LOG_LEVEL=INFO
+      - TZ=America/New_York
+    ports:
+      - "8191:8191"
+    restart: unless-stopped
+    networks:
+      - media-network
