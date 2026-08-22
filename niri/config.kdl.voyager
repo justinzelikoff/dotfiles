@@ -485,6 +485,9 @@ binds {
     // Noctalia Lock Screen (or change to "hyprlock" if you disabled Noctalia lockscreen)
     Mod+Escape { spawn "noctalia" "msg" "session" "lock"; }
 
+    // Random Wallpaper
+    Mod+Shift+W { spawn "noctalia" "msg" "wallpaper-random"; }
+
     // Noctalia binds
     // Core Noctalia binds
     Mod+Space { spawn-sh "noctalia msg panel-toggle launcher"; }
