@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Force GTK apps and file pickers to use Light Mode
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+
+# Restart GTK portal so file pickers reload the active theme
+pkill -f xdg-desktop-portal-gtk
+
+if command -v xsettingsd &>/dev/null; then
+    pkill -HUP xsettingsd
+fi
