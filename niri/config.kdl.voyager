@@ -759,6 +759,7 @@ binds {
     Mod+Shift+P { power-off-monitors; }
 }
 
-include "dms/colors.kdl"
+// I commented this out because noctalia is handling colors now
+//include "dms/colors.kdl"
 
 include "noctalia.kdl"
