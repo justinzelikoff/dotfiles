@@ -83,7 +83,7 @@ input {
 // Find more information on the wiki:
 // https://niri-wm.github.io/niri/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
-output "eDP-1" {
+/-output "eDP-1" {
     // Uncomment this line to disable this output.
     // off
 
@@ -96,11 +96,11 @@ output "eDP-1" {
     mode "1920x1080@120.030"
 
     // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-    scale 1.0
+    scale 1.5 
 
     // Transform allows to rotate the output counter-clockwise, valid values are:
     // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
-    //transform "normal"
+    transform "normal"
 
     // Position of the output in the global coordinate space.
     // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
@@ -112,6 +112,19 @@ output "eDP-1" {
     // If the position is unset or results in an overlap, the output is instead placed
     // automatically.
     position x=1280 y=0
+}
+
+// Forge dual monitor 120fps 4k settings
+output "DP-1" {
+    mode "3840x2160@120.000"
+    scale 1.5
+    position x=0 y=0
+}
+
+output "DP-2" {
+    mode "3840x2160@120.000"
+    scale 1.5
+    position x=2560 y=0
 }
 
 // Settings that influence how windows are positioned and sized.
@@ -279,12 +292,15 @@ layout {
 //spawn-at-startup "dms" "run"
 spawn-at-startup "noctalia"
 spawn-at-startup "hypridle"
-spawn-at-startup "gnome-keyring-daemon" "--start" "--components=secrets"
+
+// This is for greeter
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 
-// Load in last icon theme (this is light for orion)
-spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "color-scheme" "prefer-light"
+// Load icon theme
+spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
 spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "icon-theme" "Papirus"
 
 hotkey-overlay {
@@ -353,13 +369,6 @@ window-rule {
     // block-out-from "screencast"
 }
 
-// Example: enable rounded corners for all windows.
-// (This example rule is commented out with a "/-" in front.)
-window-rule {
-    geometry-corner-radius 15
-    clip-to-geometry true
-}
-
 // This is from Noctalia docs to be added:
 window-rule {
   // Rounded corners for a modern look.
@@ -375,7 +384,7 @@ window-rule {
   open-floating true
   default-column-width { fixed 1080; }
   default-window-height { fixed 920; }
-  draw-border-with-background false 
+  draw-border-with-background false
 }
 
 debug {
@@ -403,6 +412,16 @@ debug {
 /* Make ONLY Kitty semi-transparent with blur */
 window-rule {
     match app-id="kitty"
+    draw-border-with-background false
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+// no border background for cosmic-files
+window-rule {
+    match app-id="cosmic-files"
     draw-border-with-background false
     background-effect {
         blur true
@@ -466,8 +485,9 @@ binds {
     //
     // Most actions that you can bind here can also be invoked programmatically with
     // `niri msg action do-something`.
+    
     Mod+P { spawn  "kitty" "-e" "spotify_player"; }
-
+    Mod+Shift+C { spawn "kitty" "-e" "cava"; }
     Mod+B { spawn "firefox"; }
     // Mod-Shift-/, which is usually the same as Mod-?,
     // shows a list of important hotkeys.
@@ -479,14 +499,16 @@ binds {
 
     // Launch Yazi
     Mod+Y { spawn "kitty" "-e" "yazi"; }
-    
+
     // Launch Thunar
     Mod+N { spawn "thunar"; }
 
     // Noctalia Lock Screen (or change to "hyprlock" if you disabled Noctalia lockscreen)
     Mod+Escape { spawn "noctalia" "msg" "session" "lock"; }
 
-    // Noctalia binds
+    // Random wallpaper
+    Mod+Shift+W { spawn "noctalia" "msg" "wallpaper-random";}
+
     // Core Noctalia binds
     Mod+Space { spawn-sh "noctalia msg panel-toggle launcher"; }
     Mod+S { spawn-sh "noctalia msg panel-toggle control-center"; }
@@ -766,7 +788,7 @@ binds {
     Mod+Shift+P { power-off-monitors; }
 }
 
-// I commented this out because noctalia is handling colors now
+// Commenting out because using Noctalia for colors
 //include "dms/colors.kdl"
 
 include "noctalia.kdl"

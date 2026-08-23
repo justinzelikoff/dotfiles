@@ -487,6 +487,7 @@ binds {
     // `niri msg action do-something`.
     
     Mod+P { spawn  "kitty" "-e" "spotify_player"; }
+    Mod+Shift+C { spawn "kitty" "-e" "cava"; }
     Mod+B { spawn "firefox"; }
     // Mod-Shift-/, which is usually the same as Mod-?,
     // shows a list of important hotkeys.
