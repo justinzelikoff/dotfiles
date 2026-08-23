@@ -292,6 +292,10 @@ layout {
 //spawn-at-startup "dms" "run"
 spawn-at-startup "noctalia"
 spawn-at-startup "hypridle"
+
+// This is for greeter
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 
