@@ -175,12 +175,12 @@ layout {
     // `draw-border-with-background`.
 
     // You can change how the focus ring looks.
-//    focus-ring {
+    focus-ring {
         // Uncomment this line to disable the focus ring.
         // off
 
         // How many logical pixels the ring extends out from the windows.
- //       width 4
+        width 3
 
         // Colors can be set in a variety of ways:
         // - CSS named colors: "red"
@@ -210,7 +210,7 @@ layout {
         // To do that, set relative-to="workspace-view".
         //
         // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
-  //  }
+    }
 
     // You can also add a border. It's similar to the focus ring, but always visible.
 //    border {
@@ -486,6 +486,7 @@ binds {
     // Most actions that you can bind here can also be invoked programmatically with
     // `niri msg action do-something`.
     
+    Mod+Period { spawn "kitty" "-e" "nvim" "/home/justinzelikoff/.config/niri/config.kdl"; }
     Mod+P { spawn  "kitty" "-e" "spotify_player"; }
     Mod+Shift+C { spawn "kitty" "-e" "cava"; }
     Mod+B { spawn "firefox"; }
