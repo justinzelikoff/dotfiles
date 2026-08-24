@@ -300,7 +300,7 @@ spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 
 // Load icon theme
-spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
+spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "color-scheme" "prefer-light"
 spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "icon-theme" "Papirus"
 
 hotkey-overlay {
