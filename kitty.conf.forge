@@ -1,5 +1,5 @@
 # Disable promt asking to close
-confirm_os_window_close -1
+confirm_os_window_close 0
 
 # Font Configuration
 font_size 12.0
