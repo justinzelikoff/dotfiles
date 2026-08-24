@@ -1,9 +1,12 @@
+# No promt when closing windows
+confirm_os_window_close 0 
+
 # Font Configuration
-font_size 12.0
+font_size 11.0
 
 # Window Configuration
 window_padding_width 12
-background_opacity 1.0
+background_opacity .90
 background_blur 32
 hide_window_decorations yes
 
@@ -37,7 +40,4 @@ include dank-tabs.conf
 include dank-theme.conf
 
 
-# BEGIN_KITTY_THEME
-# GitHub Dark
-#include current-theme.conf
-# END_KITTY_THEME
+include themes/noctalia.conf
