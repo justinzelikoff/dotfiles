@@ -5,16 +5,16 @@ show_hidden = true
 
 [opener]
 libreoffice = [
-	{ run = 'libreoffice "$@"', detach = true, desc = "LibreOffice" }
+	{ run = 'libreoffice %s', orphan = true, desc = "LibreOffice" }
 ]
 firefox = [
-	{ run = 'firefox "$@"', detach = true, desc = "Firefox" }
+	{ run = 'firefox %s', orphan = true, desc = "Firefox" }
 ]
 nvim = [
-	{ run = 'nvim "%s"', block = true, desc = "Neovim" }
+	{ run = 'nvim %s', block = true, desc = "Neovim" }
 ]
 mpv = [
-	{ run = 'mpv --force-window=yes "$@"', detach = true, desc = "MPV Player" }
+	{ run = 'mpv --force-window=yes %s', orphan = true, desc = "MPV Player" }
 ]
 
 [open]
@@ -28,7 +28,7 @@ prepend_rules = [
 	{ mime = "video/*", use = "mpv" },
 	{ url = "*.{mp3,flac,wav,aac,ogg,mkv,mp4,webm}", use = "mpv" },
 
-	# 3. Images to Firefox
+	# 3. Images strictly to Firefox
 	{ mime = "image/*", use = "firefox" },
 	{ url = "*.{png,jpg,jpeg,webp,gif,svg}", use = "firefox" },
 
