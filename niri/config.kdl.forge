@@ -381,10 +381,11 @@ window-rule {
 // Floating Noctalia settings window.
 window-rule {
   match app-id="dev.noctalia.Noctalia"
-  open-floating true
-  default-column-width { fixed 1080; }
-  default-window-height { fixed 920; }
+  open-floating false
+  //default-column-width { fixed 1080; }
+  //default-window-height { fixed 920; }
   draw-border-with-background false
+  opacity 0.80
 }
 
 debug {
@@ -408,6 +409,16 @@ debug {
 //    }
 //}
 
+// Thunar window rule
+window-rule {
+	match app-id="thunar"
+	draw-border-with-background false
+	opacity 0.80
+	background-effect {
+		blur true
+		xray false
+	}
+}
 
 /* Make ONLY Kitty semi-transparent with blur */
 window-rule {
