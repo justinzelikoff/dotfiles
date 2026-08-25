@@ -114,16 +114,16 @@ input {
     position x=1280 y=0
 }
 
-// Forge dual monitor 120fps 4k settings
-output "DP-1" {
-    mode "3840x2160@120.000"
-    scale 1.5
+// Orion Monitors
+/-output "HDMI-A-1" {
+    mode "3840x2160@60.000"
+    scale 1.75
     position x=0 y=0
 }
 
-output "DP-2" {
-    mode "3840x2160@120.000"
-    scale 1.5
+/-output "HDMI-A-2" {
+    mode "3840x2160@60.000"
+    scale 1.75
     position x=2560 y=0
 }
 
@@ -393,20 +393,20 @@ debug {
 }
 
 /* Keeps ONLY the globally focused window solid */
-//window-rule {
-//    match is-focused=true
-//    opacity 1.0
-//}
+window-rule {
+    match is-focused=true
+    opacity 1.00
+}
 
 ///* Dims ALL unfocused windows (including active windows on secondary displays) */
-//window-rule {
-//    match is-focused=false
-//    opacity 1.0
-//    background-effect {
-//        blur true
-//        xray false
-//    }
-//}
+window-rule {
+    match is-focused=false
+    opacity 1.00
+    background-effect {
+        blur true
+        xray false
+    }
+}
 
 
 /* Make ONLY Kitty semi-transparent with blur */
@@ -540,10 +540,10 @@ binds {
 
     // Example media keys mapping using playerctl.
     // This will work with any MPRIS-enabled media player.
-   // XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
-    //XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl stop"; }
-    //XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
-    //XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
+    XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl stop"; }
+    XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
+    XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
 
     // Example brightness key mappings for brightnessctl.
     // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
@@ -791,5 +791,6 @@ binds {
 
 // Commenting out because using Noctalia for colors
 //include "dms/colors.kdl"
+
 
 include "noctalia.kdl"
