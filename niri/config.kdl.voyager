@@ -14,6 +14,12 @@ environment {
     XDG_CURRENT_DESKTOP "niri"
 }
 
+// Power saving for t480
+debug {
+    // Allows full-screen windows to bypass compositor overhead entirely
+    enable-overlay-planes
+}
+
 input {
     keyboard {
         xkb {
@@ -374,11 +380,11 @@ window-rule {
 // Floating Noctalia settings window.
 window-rule {
   match app-id="dev.noctalia.Noctalia"
-  open-floating false
-  //default-column-width { fixed 1080; }
-  //default-window-height { fixed 920; }
+  open-floating true
+  default-column-width { fixed 1080; }
+  default-window-height { fixed 920; }
   draw-border-with-background false 
-  opacity 0.80
+  opacity 1.0 
 }
 
 debug {
@@ -402,34 +408,34 @@ debug {
 //    }
 //}
 
-window-rule {
-	match app-id="thunar"
-	draw-border-with-background false
-	opacity 0.80
-	background-effect {
-		blur true
-		xray false
-	}
-}
+//window-rule {
+//	match app-id="thunar"
+//	draw-border-with-background false
+//	opacity 0.80
+//	background-effect {
+//		blur true
+//		xray false
+//	}
+//}
 
 /* Make ONLY Kitty semi-transparent with blur */
-window-rule {
-    match app-id="kitty"
-    draw-border-with-background false
-    background-effect {
-        blur true
-        xray false
-    }
-}
+//window-rule {
+//    match app-id="kitty"
+//    draw-border-with-background false
+//    background-effect {
+//        blur true
+//        xray false
+//    }
+//}
 
 // Noctalia Blur
 /* Apps: blur them all without xray so it looks more realistic. */
-window-rule {
-  background-effect {
-    blur true
-    xray false
-  }
-}
+//window-rule {
+//  background-effect {
+//    blur true
+//    xray false
+//  }
+//}
 
 /*
   Noctalia
@@ -445,28 +451,28 @@ layer-rule {
 }
 
 /* Enable blur on noctalia's window switcher and disable xray. */
-layer-rule {
-    match namespace="noctalia-window-switcher"
-    background-effect {
-        blur true
-        xray false
-    }
-}
+//layer-rule {
+//    match namespace="noctalia-window-switcher"
+//    background-effect {
+//       // blur true
+//        xray false
+//    }
+//}
 
 /* You can also fine-tune the blur effect globally. */
-blur {
-  passes 3        // more passes = stronger blur (default: 3)
-  offset 3.0      // sample distance per pass (default: 3.0)
-  noise 0.02      // grain overlay (default: 0.02)
-  saturation 1.5  // color saturation boost (default: 1.5)
-}
+//blur {
+//  passes 3        // more passes = stronger blur (default: 3)
+//  offset 3.0      // sample distance per pass (default: 3.0)
+//  noise 0.02      // grain overlay (default: 0.02)
+//  saturation 1.5  // color saturation boost (default: 1.5)
+//}
 
 
 // Noctalia overview blured wallpaper
-layer-rule {
-  match namespace="^noctalia-backdrop"
-  place-within-backdrop true
-}
+//layer-rule {
+//  match namespace="^noctalia-backdrop"
+//  place-within-backdrop true
+//}
 
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name

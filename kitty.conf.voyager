@@ -6,8 +6,8 @@ font_size 11.0
 
 # Window Configuration
 window_padding_width 12
-background_opacity .80
-background_blur 32
+#background_opacity .80
+#background_blur 32
 hide_window_decorations yes
 
 # Cursor Configuration
