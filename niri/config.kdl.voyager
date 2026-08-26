@@ -14,12 +14,6 @@ environment {
     XDG_CURRENT_DESKTOP "niri"
 }
 
-// Power saving for t480
-debug {
-    // Allows full-screen windows to bypass compositor overhead entirely
-    enable-overlay-planes
-}
-
 input {
     keyboard {
         xkb {
@@ -147,6 +141,9 @@ layout {
         // Fixed sets the width in logical pixels exactly.
         // fixed 1920
     }
+    
+    // Set transparent workspace background color so the backdrop is visible at all times
+    background-color "transparent"
 
     // You can also customize the heights that "switch-preset-window-height" (Mod+Ctrl+Shift+R) toggles between.
     // preset-window-heights { }
@@ -468,11 +465,18 @@ layer-rule {
 //}
 
 
-// Noctalia overview blured wallpaper
-//layer-rule {
-//  match namespace="^noctalia-backdrop"
-//  place-within-backdrop true
-//}
+// Place the regular wallpaper on the backdrop
+layer-rule {
+    match namespace="^noctalia-wallpaper"
+    place-within-backdrop true
+    }
+
+// Disables workspace shadows in the overview
+overview {
+	workspace-shadow {
+		off
+	}
+}
 
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
