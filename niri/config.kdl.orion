@@ -395,39 +395,39 @@ debug {
 /* Keeps ONLY the globally focused window solid */
 window-rule {
     match is-focused=true
-    opacity 1.00
+    opacity 1.0
 }
 
 ///* Dims ALL unfocused windows (including active windows on secondary displays) */
-window-rule {
-    match is-focused=false
-    opacity 1.00
-    background-effect {
-        blur true
-        xray false
-    }
-}
+//window-rule {
+//    match is-focused=false
+//    opacity 1.0 
+//    background-effect {
+//        blur true
+//        xray false
+//    }
+//}
 
 
 /* Make ONLY Kitty semi-transparent with blur */
-window-rule {
-    match app-id="kitty"
-    draw-border-with-background false
-    background-effect {
-        blur true
-        xray false
-    }
-}
+//window-rule {
+//    match app-id="kitty"
+//    draw-border-with-background false
+//    background-effect {
+//        blur true
+//        xray false
+//    }
+//}
 
 // no border background for cosmic-files
-window-rule {
-    match app-id="cosmic-files"
-    draw-border-with-background false
-    background-effect {
-        blur true
-        xray false
-    }
-}
+//window-rule {
+//    match app-id="cosmic-files"
+//    draw-border-with-background false
+//    background-effect {
+//        blur true
+//        xray false
+//    }
+//}
 
 // Noctalia Blur
 /* Apps: blur them all without xray so it looks more realistic. */
@@ -447,7 +447,7 @@ layer-rule {
   match namespace="^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd)$"
   background-effect {
     xray false
-    // blur false
+    blur true
   }
 }
 
