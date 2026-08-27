@@ -404,14 +404,14 @@ debug {
 //}
 
 ///* Dims ALL unfocused windows (including active windows on secondary displays) */
-//window-rule {
- //   match is-focused=false
-  //  opacity 0.70
-   // background-effect {
-    //    blur true
-     //   xray false
-   // }
-//}
+window-rule {
+   match is-focused=false
+   opacity 0.70
+   background-effect {
+       blur true
+       xray false
+   }
+}
 
 // Thunar window rule
 window-rule {
